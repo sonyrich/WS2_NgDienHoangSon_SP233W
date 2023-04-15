@@ -49,6 +49,7 @@
                                 + "&pk=" + dto.getUsername()
                                 + "&lastSearchValue=" + request.getParameter("txtSearchValue");
                 %>
+            <form action="MainController">
                 <tr>
                     <td>
                         <%= ++count%>
@@ -77,21 +78,21 @@
                         <input type="hidden" name="lastSearchValue" value="<%= request.getParameter("txtSearchValue")%>" />
                     </td>
                 </tr>
-                <%
-                    }
-                %>
-
-            </tbody>
-        </table>
-
-        <%
-        } else {//else if
-        %>
-        <h2>No Record is matched</h2>
-        <%
+            </form>
+            <%
                 }
-            }//end search value
+            %>
+        </tbody>
+    </table>
 
-        %>
-    </body>
+    <%
+    } else {//else if
+    %>
+    <h2>No Record is matched</h2>
+    <%
+            }
+        }//end search value
+
+    %>
+</body>
 </html>
