@@ -36,12 +36,18 @@
                     <th>Password</th>
                     <th>Lastname</th>
                     <th>Role</th>
+                    <th>Delete</th>
+                    <th>Update</th>
                 </tr>
             </thead>
             <tbody>
                 <%
                     int count = 0;
                     for (RegistrationDTO dto : result) {
+                        String urlRewriting = "MainController"
+                                + "?btAction=Del"
+                                + "&pk=" + dto.getUsername()
+                                + "&lastSearchValue=" + request.getParameter("txtSearchValue");
                 %>
                 <tr>
                     <td>
@@ -49,15 +55,26 @@
                     </td>
                     <td>
                         <%= dto.getUsername()%>
+                        <input type="hidden" name="txtUsername" value="<%= dto.getUsername()%>" />
                     </td>
                     <td>
-                        <%= dto.getPassword()%>
+                        <input type="text" name="txtPassword" value="<%= dto.getPassword()%>" />
                     </td>
                     <td>
                         <%= dto.getLastname()%>
                     </td>
                     <td>
-                        <%= dto.isRole()%>
+                        <input type="checkbox" name="ADMIN" value="ON" <% if (dto.isRole()) {%>
+                               checked="checked"
+                               <% }%>
+                               />
+                    </td>
+                    <td>
+                        <a href="<%= urlRewriting%>">Delete</a>
+                    </td>
+                    <td>
+                        <input type="submit" value="Update" name="btAction" />
+                        <input type="hidden" name="lastSearchValue" value="<%= request.getParameter("txtSearchValue")%>" />
                     </td>
                 </tr>
                 <%
