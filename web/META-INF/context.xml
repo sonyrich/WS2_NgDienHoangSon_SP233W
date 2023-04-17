@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/WS2_NgDienHoangSon_SP233W"/>
+<Context antiJARlocking="true" path="/WS2_NgDienHoangSon_SP233W">
+    <Resource name="Spring2023" auth="Container" type="javax.sql.DataSource"
+              username="sa" password="12345"
+              driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+              url="jdbc:sqlserver://localhost:1433;databaseName=Sonndh_SP23_3W"/>
+</Context>

@@ -7,12 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.naming.NamingException;
 import sonndh.database.DBUtils;
 
 public class RegistrationDAO implements Serializable {
 
     public boolean checkLogin(String username, String password)
-            throws SQLException {
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -53,7 +54,7 @@ public class RegistrationDAO implements Serializable {
     }
 
     public void searchByLastname(String searchValue)
-            throws SQLException {
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -98,7 +99,8 @@ public class RegistrationDAO implements Serializable {
         }
     }
 
-    public boolean deleteRecord(String pk) throws SQLException {
+    public boolean deleteRecord(String pk)
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
 
@@ -127,7 +129,7 @@ public class RegistrationDAO implements Serializable {
     }
 
     public boolean updateRecord(String username, String password, boolean role)
-            throws SQLException {
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
 

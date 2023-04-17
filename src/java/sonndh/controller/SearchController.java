@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +36,8 @@ public class SearchController extends HttpServlet {
                 url = SHOWSEARCHCONTROLLER;
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
             ex.printStackTrace();
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

@@ -3,6 +3,7 @@ package sonndh.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,8 @@ public class UpdateController extends HttpServlet {
             //test output
             //out.println(username + " " + password + " " + searchValue + " " + role);
         } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
             ex.printStackTrace();
         } finally {
             response.sendRedirect(url);
