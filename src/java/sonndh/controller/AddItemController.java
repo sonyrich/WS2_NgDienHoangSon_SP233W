@@ -2,49 +2,33 @@ package sonndh.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import sonndh.cart.CartObj;
 
-public class MainController extends HttpServlet {
+public class AddItemController extends HttpServlet {
 
-    private final String LOGINPAGE = "login.html";
-    private final String INVALIDPAGE = "invalid.html";
-    private final String LOGINCONTROLLER = "LoginController";
-    private final String NULLCONTROLLER = "NullController";
-    private final String SEARCHCONTROLLER = "SearchController";
-    private final String DELETECONTROLLER = "DeleteController";
-    private final String UPDATECONTROLLER = "UpdateController";
-    private final String ADDITEMTOCART = "AddItemController";
-    private final String VIEWCARTPAGE = "viewCart.jsp";
+    private final String SHOPPINGPAGE = "bookStore.html";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String button = request.getParameter("btAction");
-            String url = LOGINPAGE;
-            if (button == null) {
-                url = NULLCONTROLLER;
-            } else if (button.equals("Login")) {
-                url = LOGINCONTROLLER;
-            } else if (button.equals("Search")) {
-                url = SEARCHCONTROLLER;
-            } else if (button.equals("Del")) {
-                url = DELETECONTROLLER;
-            } else if (button.equals("Update")) {
-                url = UPDATECONTROLLER;
-            } else if (button.equals("Add to Cart")) {
-                url = ADDITEMTOCART;
-            } else if (button.equals("View Cart")) {
-                url = VIEWCARTPAGE;
+            String url = SHOPPINGPAGE;
+            HttpSession session = request.getSession();
+            CartObj cart = (CartObj) session.getAttribute("CART");
+            if (cart == null) {
+                cart = new CartObj();
             }
+            String title = request.getParameter("cboBook");
+            cart.addItemToCart(title);
+            session.setAttribute("CART", cart);
 
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         } finally {
             out.close();
         }
