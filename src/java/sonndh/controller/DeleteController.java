@@ -21,7 +21,7 @@ public class DeleteController extends HttpServlet {
         String url = ERRORPAGE;
         try {
             String pk = request.getParameter("pk");
-            String searchValue = request.getParameter("LastSearchValue");
+            String searchValue = request.getParameter("lastSearchValue");
 
             RegistrationDAO dao = new RegistrationDAO();
             boolean result = dao.deleteRecord(pk);

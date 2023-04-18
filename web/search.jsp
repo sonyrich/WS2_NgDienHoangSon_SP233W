@@ -47,7 +47,7 @@
                         String urlRewriting = "MainController"
                                 + "?btAction=Del"
                                 + "&pk=" + dto.getUsername()
-                                + "&LastSearchValue=" + request.getParameter("txtSearchValue");
+                                + "&lastSearchValue=" + request.getParameter("txtSearchValue");
                 %>
             <form action="MainController">
                 <tr>

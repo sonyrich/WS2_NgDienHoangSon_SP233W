@@ -49,7 +49,7 @@ public class ShowSearchController extends HttpServlet {
                     String urlRewriting = "MainController?btAction=Del"
                             + "&pk="
                             + dto.getUsername()
-                            + "&LastSearchValue="
+                            + "&lastSearchValue="
                             + request.getParameter("txtSearchValue");
 
                     out.println("<form action='MainController'>");
