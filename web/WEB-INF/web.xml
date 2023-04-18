@@ -13,16 +13,16 @@
         <servlet-class>sonndh.controller.SearchController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ShowSearchController</servlet-name>
-        <servlet-class>sonndh.controller.ShowSearchController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>DeleteController</servlet-name>
         <servlet-class>sonndh.controller.DeleteController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateController</servlet-name>
         <servlet-class>sonndh.controller.UpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NullController</servlet-name>
+        <servlet-class>sonndh.controller.NullController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -37,10 +37,6 @@
         <url-pattern>/SearchController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ShowSearchController</servlet-name>
-        <url-pattern>/ShowSearchController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DeleteController</servlet-name>
         <url-pattern>/DeleteController</url-pattern>
     </servlet-mapping>
@@ -48,13 +44,17 @@
         <servlet-name>UpdateController</servlet-name>
         <url-pattern>/UpdateController</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NullController</servlet-name>
+        <url-pattern>/NullController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>login.html</welcome-file>
+        <welcome-file>MainController</welcome-file>
     </welcome-file-list>
     <resource-ref>
         <res-ref-name>DBCon</res-ref-name>

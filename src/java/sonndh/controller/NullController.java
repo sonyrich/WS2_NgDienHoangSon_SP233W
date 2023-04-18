@@ -2,43 +2,46 @@ package sonndh.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sonndh.registration.RegistrationDAO;
 
-public class MainController extends HttpServlet {
+public class NullController extends HttpServlet {
 
     private final String LOGINPAGE = "login.html";
-    private final String INVALIDPAGE = "invalid.html";
-    private final String LOGINCONTROLLER = "LoginController";
-    private final String NULLCONTROLLER = "NullController";
-    private final String SEARCHCONTROLLER = "SearchController";
-    private final String DELETECONTROLLER = "DeleteController";
-    private final String UPDATECONTROLLER = "UpdateController";
+    private final String SEARCHPAGE = "search.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        String url = LOGINPAGE;
         try {
-            String button = request.getParameter("btAction");
-            String url = LOGINPAGE;
-            if (button == null) {
-                url = NULLCONTROLLER;
-            } else if (button.equals("Login")) {
-                url = LOGINCONTROLLER;
-            } else if (button.equals("Search")) {
-                url = SEARCHCONTROLLER;
-            } else if (button.equals("Del")) {
-                url = DELETECONTROLLER;
-            } else if (button.equals("Update")) {
-                url = UPDATECONTROLLER;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    String username = cookie.getName();
+                    String password = cookie.getValue();
+                    RegistrationDAO dao = new RegistrationDAO();
+                    boolean result = dao.checkLogin(username, password);
+                    if (result) {
+                        url = SEARCHPAGE;
+                    }
+                }
             }
 
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
+        } catch (SQLException ex) {
+            Logger.getLogger(NullController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(NullController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             out.close();
         }

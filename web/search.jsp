@@ -14,6 +14,22 @@
         <title>Search JSP Page</title>
     </head>
     <body>
+        <%
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                String username = "";
+                for (Cookie cookie : cookies) {
+                    String temp = cookie.getName();
+                    if (!temp.equals("JSESSIONID")) {
+                        username = temp;
+                    }
+                }
+        %>
+        <font color="red">Welcome, <%=username%></font>
+        <%
+            }
+        %>
+        
         <h1>Search Page</h1>
         <form action="MainController">
             Search Value

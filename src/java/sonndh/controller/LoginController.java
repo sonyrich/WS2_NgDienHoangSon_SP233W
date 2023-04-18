@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,9 @@ public class LoginController extends HttpServlet {
 
             if (result) {
                 url = SEARCHPAGE;
+                Cookie cookie = new Cookie(username, password);
+                cookie.setMaxAge(3 * 60);
+                response.addCookie(cookie);
             }
 
             response.sendRedirect(url);
