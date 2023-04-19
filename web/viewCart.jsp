@@ -27,39 +27,51 @@
                     <th>No.</th>
                     <th>Title</th>
                     <th>Quantity</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
+            <form action="MainController">
                 <%
                     Map<String, Integer> items = cart.getItems();
                     int count = 0;
                     for (Map.Entry item : items.entrySet()) {
                 %>
                 <tr>
-                    <td><%= ++count%></td>
+                    <td>
+                        <%= ++count%>
+                    </td>
                     <td>
                         <%= item.getKey()%>
                     </td>
                     <td>
                         <%= item.getValue()%>
                     </td>
+                    <td>
+                        <input type="checkbox" name="chkItem" value="<%= item.getKey()%>" /> 
+                    </td>
                 </tr>
                 <%
                     }//end for
                 %>
-            </tbody>
-        </table>
-        <%
-            }
-        } else {//else cart
-        %>
-        <h2>Cart have not items!</h2>
-        <%
+                <tr>
+                    <td colspan="3">
+                        <a href="bookStore.html">Back To Shopping</a>
+                    </td>
+                    <td>
+                        <input type="submit" value="Remove from Cart" name="btAction"/>
+                    </td>
+                </tr>
+            </form>
+        </tbody>
+    </table>
+    <%
+                    return;
                 }
-            } else {//if
-
             }
-        %>
-        <a href="bookStore.html">Back To Shopping</a>
-    </body>
+        }
+    %>
+    <h2>Cart have not items!</h2>
+    <a href="bookStore.html">Back To Shopping</a>
+</body>
 </html>

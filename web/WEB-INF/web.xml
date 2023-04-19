@@ -28,6 +28,10 @@
         <servlet-name>AddItemController</servlet-name>
         <servlet-class>sonndh.controller.AddItemController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RemoveItemController</servlet-name>
+        <servlet-class>sonndh.controller.RemoveItemController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>AddItemController</servlet-name>
         <url-pattern>/AddItemController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveItemController</servlet-name>
+        <url-pattern>/RemoveItemController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

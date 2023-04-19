@@ -36,7 +36,7 @@ public class CartObj implements Serializable {
         this.items.put(title, quantity);
     }
 
-    public void removeItemToCart(String title) {
+    public void removeItemFromCart(String title) {
         if (this.items == null) {
             return;
         }
