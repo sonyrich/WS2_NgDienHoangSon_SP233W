@@ -32,6 +32,10 @@
         <servlet-name>RemoveItemController</servlet-name>
         <servlet-class>sonndh.controller.RemoveItemController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateNewAccountController</servlet-name>
+        <servlet-class>sonndh.controller.CreateNewAccountController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>RemoveItemController</servlet-name>
         <url-pattern>/RemoveItemController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateNewAccountController</servlet-name>
+        <url-pattern>/CreateNewAccountController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

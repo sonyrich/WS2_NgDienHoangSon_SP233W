@@ -15,6 +15,7 @@ public class RemoveItemController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         try {
             HttpSession session = request.getSession(false);
             if (session != null) {

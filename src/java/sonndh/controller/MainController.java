@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 public class MainController extends HttpServlet {
 
     private final String LOGINPAGE = "login.html";
-    private final String INVALIDPAGE = "invalid.html";
     private final String LOGINCONTROLLER = "LoginController";
+    private final String CREATENEWACCOUNT = "CreateNewAccountController";
     private final String NULLCONTROLLER = "NullController";
     private final String SEARCHCONTROLLER = "SearchController";
     private final String DELETECONTROLLER = "DeleteController";
@@ -25,13 +25,17 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
+        String button = request.getParameter("btAction");
+        String url = LOGINPAGE;
+
         try {
-            String button = request.getParameter("btAction");
-            String url = LOGINPAGE;
             if (button == null) {
                 url = NULLCONTROLLER;
             } else if (button.equals("Login")) {
                 url = LOGINCONTROLLER;
+            } else if (button.equals("Register")) {
+                url = CREATENEWACCOUNT;
             } else if (button.equals("Search")) {
                 url = SEARCHCONTROLLER;
             } else if (button.equals("Del")) {
@@ -45,10 +49,9 @@ public class MainController extends HttpServlet {
             } else if (button.equals("Remove from Cart")) {
                 url = REMOVEITEMFORMCART;
             }
-
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-        } finally {
             out.close();
         }
     }

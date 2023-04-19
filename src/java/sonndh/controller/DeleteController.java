@@ -3,6 +3,8 @@ package sonndh.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +20,9 @@ public class DeleteController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         String url = ERRORPAGE;
+        
         try {
             String pk = request.getParameter("pk");
             String searchValue = request.getParameter("lastSearchValue");
@@ -30,11 +34,10 @@ public class DeleteController extends HttpServlet {
                 url = "MainController?btAction=Search&txtSearchValue="
                         + searchValue;
             }
-
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(NullController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(NullController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             response.sendRedirect(url);
             out.close();

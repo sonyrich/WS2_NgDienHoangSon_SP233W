@@ -98,6 +98,38 @@ public class RegistrationDAO implements Serializable {
             }
         }
     }
+    
+    public boolean insertRecord(String username, String password, String lastname, boolean role)
+            throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUtils.makeConnection();
+            if (con != null) {
+                String sql = "Insert Into Registration "
+                        + "(username, password, lastname, isAdmin) "
+                        + "values(?,?,?,?)";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                stm.setString(2, password);
+                stm.setString(3, lastname);
+                stm.setBoolean(4, role);
+                int row = stm.executeUpdate();
+                if (row > 0) {
+                    return true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 
     public boolean deleteRecord(String pk)
             throws SQLException, NamingException {

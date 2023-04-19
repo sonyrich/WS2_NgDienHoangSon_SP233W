@@ -7,37 +7,33 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sonndh.registration.RegistrationDAO;
 
-public class NullController extends HttpServlet {
-
+public class CreateNewAccountController extends HttpServlet {
     private final String LOGINPAGE = "login.html";
-    private final String SEARCHPAGE = "search.jsp";
+    private final String CREATENEWACCOUNT = "CreateNewAccount.html";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        String url = LOGINPAGE;
-       
+        String url = CREATENEWACCOUNT;
+        
         try {
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    String username = cookie.getName();
-                    String password = cookie.getValue();
-                    
-                    RegistrationDAO dao = new RegistrationDAO();
-                    boolean result = dao.checkLogin(username, password);
-                    if (result) {
-                        url = SEARCHPAGE;
-                    }
-                }
+            String username = request.getParameter("txtUsername");
+            String password = request.getParameter("txtPassword");
+            String confirm = request.getParameter("txtConfirm");
+            String lastname = request.getParameter("txtLastname");
+            
+            RegistrationDAO dao =new RegistrationDAO();
+            boolean result= dao.insertRecord(username, password, lastname, false);
+            
+            if(result){
+                url = LOGINPAGE;
             }
         } catch (SQLException ex) {
             Logger.getLogger(NullController.class.getName()).log(Level.SEVERE, null, ex);

@@ -17,19 +17,21 @@ public class AddItemController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        String url = SHOPPINGPAGE;
+        
         try {
-            String url = SHOPPINGPAGE;
             HttpSession session = request.getSession();
             CartObj cart = (CartObj) session.getAttribute("CART");
+            
             if (cart == null) {
                 cart = new CartObj();
             }
             String title = request.getParameter("cboBook");
             cart.addItemToCart(title);
             session.setAttribute("CART", cart);
-
-            response.sendRedirect(url);
         } finally {
+            response.sendRedirect(url);
             out.close();
         }
     }
