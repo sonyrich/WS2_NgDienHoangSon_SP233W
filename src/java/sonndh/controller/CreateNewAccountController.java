@@ -6,41 +6,70 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sonndh.registration.RegistrationDAO;
+import sonndh.registration.RegistrationInsertError;
 
 public class CreateNewAccountController extends HttpServlet {
+
     private final String LOGINPAGE = "login.html";
-    private final String CREATENEWACCOUNT = "CreateNewAccount.html";
+    private final String CREATENEWACCOUNT = "CreateNewAccount.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         String url = CREATENEWACCOUNT;
-        
+        RegistrationInsertError errors = new RegistrationInsertError();
+        boolean berror = false;
+
         try {
             String username = request.getParameter("txtUsername");
             String password = request.getParameter("txtPassword");
             String confirm = request.getParameter("txtConfirm");
             String lastname = request.getParameter("txtLastname");
-            
-            RegistrationDAO dao =new RegistrationDAO();
-            boolean result= dao.insertRecord(username, password, lastname, false);
-            
-            if(result){
-                url = LOGINPAGE;
+
+            if (username.trim().length() < 6 || username.trim().length() > 20) {
+                berror = true;
+                errors.setUsernameLengthErr("Username is required 6 - 20 chars");
+            }
+            if (password.trim().length() < 6 || password.trim().length() > 20) {
+                berror = true;
+                errors.setPasswordLengthErr("Password is required 6 - 20 chars");
+            }
+            if (!confirm.equals(password)) {
+                berror = true;
+                errors.setConfirmNotMatch("Password mismatch");
+            }
+            if (lastname.trim().length() < 2 || lastname.trim().length() > 40) {
+                berror = true;
+                errors.setLastnameLengthErr("Lastname is required 2 - 40 chars");
+            }
+            if (berror) {
+                request.setAttribute("INSERTERROR", errors);
+            } else {
+                RegistrationDAO dao = new RegistrationDAO();
+                boolean result = dao.insertRecord(username, password, lastname, false);
+
+                if (result) {
+                    url = LOGINPAGE;
+                }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(NullController.class.getName()).log(Level.SEVERE, null, ex);
+            berror = true;
+            errors.setUsernameIsExisted("Username is existed");
+            request.setAttribute("INSERTERROR", errors);
         } catch (NamingException ex) {
             Logger.getLogger(NullController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            response.sendRedirect(url);
+            //response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
             out.close();
         }
     }
