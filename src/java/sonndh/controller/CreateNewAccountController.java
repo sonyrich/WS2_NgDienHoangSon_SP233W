@@ -17,7 +17,7 @@ import sonndh.registration.RegistrationInsertError;
 public class CreateNewAccountController extends HttpServlet {
 
     private final String LOGINPAGE = "login.html";
-    private final String CREATENEWACCOUNT = "CreateNewAccount.jsp";
+    private final String CREATENEWACCOUNT = "createNewAccount.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,7 +26,7 @@ public class CreateNewAccountController extends HttpServlet {
 
         String url = CREATENEWACCOUNT;
         RegistrationInsertError errors = new RegistrationInsertError();
-        boolean berror = false;
+        boolean bError = false;
 
         try {
             String username = request.getParameter("txtUsername");
@@ -35,22 +35,22 @@ public class CreateNewAccountController extends HttpServlet {
             String lastname = request.getParameter("txtLastname");
 
             if (username.trim().length() < 6 || username.trim().length() > 20) {
-                berror = true;
+                bError = true;
                 errors.setUsernameLengthErr("Username is required 6 - 20 chars");
             }
             if (password.trim().length() < 6 || password.trim().length() > 20) {
-                berror = true;
+                bError = true;
                 errors.setPasswordLengthErr("Password is required 6 - 20 chars");
             }
             if (!confirm.equals(password)) {
-                berror = true;
+                bError = true;
                 errors.setConfirmNotMatch("Password mismatch");
             }
             if (lastname.trim().length() < 2 || lastname.trim().length() > 40) {
-                berror = true;
+                bError = true;
                 errors.setLastnameLengthErr("Lastname is required 2 - 40 chars");
             }
-            if (berror) {
+            if (bError) {
                 request.setAttribute("INSERTERROR", errors);
             } else {
                 RegistrationDAO dao = new RegistrationDAO();
@@ -61,7 +61,7 @@ public class CreateNewAccountController extends HttpServlet {
                 }
             }
         } catch (SQLException ex) {
-            berror = true;
+            bError = true;
             errors.setUsernameIsExisted("Username is existed");
             request.setAttribute("INSERTERROR", errors);
         } catch (NamingException ex) {
